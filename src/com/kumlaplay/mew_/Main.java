@@ -28,17 +28,12 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
-import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public abstract class Main implements Runnable
+public abstract class Main
 {
-	
-	Thread t;
-	
-	public volatile static Thread mainThread;
-	
+
 	public static URI tawk;
 	
 	public static File testfile = new File("C:/Users/Mattias Wiklund/Desktop/Leekspin.wav");
@@ -51,25 +46,15 @@ public abstract class Main implements Runnable
 	
 	static JFrame frame = new JFrame("KumlaPlay");
 	public static JTextPane console = new JTextPane();
+	public static JLabel label_1;
 	
 	public static SourceDataLine line;
 	public static AudioInputStream din;
-	
-	public void start(){
-		t = new Thread(this);
-		mainThread = Thread.currentThread();
-		t.start();
-		
-	}
-	
-	public void run(){
+
+
+	public static void main(String[] args) {
 		initFrame();
 		
-	}
-	
-	public static void main(String[] args) {
-		
-
 	}
 	
 	private static void initFrame() {
@@ -92,7 +77,7 @@ public abstract class Main implements Runnable
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
-		JToggleButton connect = new JToggleButton("STREAM OFF");
+		JButton connect = new JButton("STREAM OFF");
 		GridBagConstraints gbc_connect = new GridBagConstraints();
 		gbc_connect.fill = GridBagConstraints.BOTH;
 		gbc_connect.insets = new Insets(0, 0, 5, 5);
@@ -107,6 +92,12 @@ public abstract class Main implements Runnable
 					streamOn = false;
 					
 					// Stop
+					try {
+						StreamingThread.in.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					StreamingThread.line.drain();
 					StreamingThread.line.stop();
 					StreamingThread.line.close();
@@ -121,6 +112,8 @@ public abstract class Main implements Runnable
 				} else {
 					console.setText("Stream opened.");
 					streamOn = true;
+					StopWatch timer = new StopWatch();
+					timer.start();
 					StreamingThread player = new StreamingThread();
 					player.start();
 					
@@ -190,7 +183,7 @@ public abstract class Main implements Runnable
 		gbc_progressBar.gridy = 2;
 		panel_1.add(progressBar, gbc_progressBar);
 		
-		JLabel label_1 = new JLabel("00:00:00");
+		label_1 = new JLabel("00:00:00");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 5, 0);
 		gbc_label_1.gridx = 2;

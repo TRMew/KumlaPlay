@@ -11,6 +11,7 @@ import javax.sound.sampled.SourceDataLine;
 public class StreamingThread extends Thread{
 
 	public static AudioInputStream din;
+	public static AudioInputStream in;
 	public static SourceDataLine line;
 	
 	Thread t;
@@ -34,9 +35,6 @@ public class StreamingThread extends Thread{
 		
 		din = null;
 		try {
-			
-			AudioInputStream in;
-			
 //			if (link == null) {
 //				console.setText("Error: Entered URL is not valid.");
 //				streamOn = false;
