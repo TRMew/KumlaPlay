@@ -98,11 +98,8 @@ public abstract class Main
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					StreamingThread.line.drain();
-					StreamingThread.line.stop();
-					StreamingThread.line.close();
 					console.setText("Stream closed.");
-					StreamingThread.streamThread.interrupt();
+					StreamingThread.threadInterrupt();
 					try {
 						din.close();
 					} catch (IOException e) {

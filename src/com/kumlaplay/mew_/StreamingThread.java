@@ -69,17 +69,33 @@ public class StreamingThread extends Thread{
 
 		}
 		catch(Exception e) {
-			streamThread.interrupt();
+			threadInterrupt();
 			System.out.println("NOT CORRECT URL OR STREAM DOES NOT EXIST");
 			e.printStackTrace();
 		}
 		finally {
 			if(din != null) {
 				try { din.close(); 
-				streamThread.interrupt();
+				threadInterrupt();
 				} catch(IOException e) { }
 			}
 		}
+	}
+	
+	public static void threadInterrupt(){
+		Thread.currentThread().interrupt();
+		try {
+			din.close();
+			in.close();
+			line.flush();
+			line.stop();
+			line.close();
+			StopWatch.threadInterrupt();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void main(String[] args){

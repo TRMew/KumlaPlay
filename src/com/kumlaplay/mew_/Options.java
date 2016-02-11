@@ -16,6 +16,7 @@ public class Options {
 
 	private static JFrame optionFrame;
 	private static JTextField textField;
+	private static JTextField textField_1;
 	
 	public static void main(String[] args){
 		loadFrame();
@@ -53,8 +54,12 @@ public class Options {
 		});
 		panel.add(btnOk, "cell 2 0,alignx center,aligny center");
 		
-		JLabel lblSnartOpenSource = new JLabel("Snart open source :)");
-		panel.add(lblSnartOpenSource, "cell 0 6,alignx center,aligny center");
+		JLabel lblPatchNotesAnd = new JLabel("Patch notes and information");
+		panel.add(lblPatchNotesAnd, "cell 0 4,alignx center,aligny center");
+		
+		textField_1 = new JTextField();
+		panel.add(textField_1, "cell 0 5 3 2,grow");
+		textField_1.setColumns(10);
 		
 		optionFrame.setVisible(true);
 		

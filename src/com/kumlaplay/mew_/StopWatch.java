@@ -10,11 +10,10 @@ public class StopWatch extends Thread {
 	private static long m;
 	private static long s;
 
-	private static long totalS;
-	
 	private static long startTime;
-	private static long timePlayed;
 
+	private static long sleepTime = 1000;
+	
 	private static String s_h;
 	private static String s_m;
 	private static String s_s;
@@ -37,13 +36,22 @@ public class StopWatch extends Thread {
 		timer();
 
 	}
+	
+	public static void threadInterrupt(){
+		Thread.currentThread().interrupt();
+		
+	}
 
 	public static void timer() {
 		while (Main.streamOn) {
-			timePlayed = ((System.currentTimeMillis() - 
-					startTime) / 1000);
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			s = timePlayed;
+			s = (s+1);
 			
 			if (m > 0){
 				
